@@ -34,7 +34,7 @@ from modules.ledgerbase import LedgerBase
 from modules.node_interface import NodeInterface
 
 
-__version__ = '0.1.21'
+__version__ = '0.1.22'
 
 
 # Server
@@ -180,7 +180,7 @@ class WalletServer(TCPServer):
         while not stop_event.is_set():
             try:
                 app_log.info("STATUS: {} Connected clients.".format(len(self.clients)))
-                self.status_dict['clients'] = str(len(self.clients))
+                self.status_dict['clients'] = len(self.clients)
                 self.status_dict['max_clients'] = MAX_CLIENTS
                 if process:
                     of = len(process.open_files())
