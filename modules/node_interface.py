@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from modules.ledgerbase import LedgerBase
 
 
-__version__ = "0.0.12"
+__version__ = "0.0.13"
 
 # Hardcoded list of addresses that need a message, like exchanges.
 # qtrade, tradesatoshi, old cryptopia, graviex, finexbox
@@ -295,7 +295,11 @@ class NodeInterface:
         # TODO: factorize with node_aliases above
         recipient = mp_insert[2]
         message = mp_insert[7]
-        # print(recipient, message)
+        sig = mp_insert[4]
+        if sig[:44] == "MEQCIBsXIetxHzJFIeQZwqsB6Q0EkVpWm4tIaH1TsePv":
+            # potentially buggy sig
+            return ["Error: Your mobile wallet needs upgrading - See FAQ"]
+        # print(recipient, message, sig)
         # TODO: add validity and checksum address for recipient + sender from polysign?
         if len(message) < 5 and recipient in REJECT_EMPTY_MESSAGE_FOR:
             return ["Error: mandatory message for this recipient - See FAQ"]

@@ -34,7 +34,7 @@ from modules.ledgerbase import LedgerBase
 from modules.node_interface import NodeInterface
 
 
-__version__ = '0.1.20'
+__version__ = '0.1.21'
 
 
 # Server
