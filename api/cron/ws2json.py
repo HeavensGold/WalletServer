@@ -3,7 +3,7 @@ ws2json.py
 
 Tests a list of official wallet servers, and produces the json output needed by the official API.
 
-To be run by a cron everty 5 minutes.
+To be run by a cron every 5 minutes.
 """
 
 import json
@@ -18,14 +18,14 @@ import urllib3
 from tornado.ioloop import IOLoop
 from tornado.websocket import websocket_connect
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 
 # global vars come first - if need to be globals, then use UPPERCASE
 
 # List of wallet servers ip or ip:port to test
 # TODO: load from json with a helper function (separate code from data)
 WALLET_SERVERS = []
-WEBSOCKET_SERVERS = ['194.19.235.82:8155', "wallet.bismuthplatform.de:8155","testnet2828.bismuthplatform.de:8155"]
+WEBSOCKET_SERVERS = ["wallet.bismuthplatform.de:8155","testnet2828.bismuthplatform.de:8155"]
 # TODO
 WEBSOCKET_SERVERS = []
 # Default port to use if none is provided
@@ -101,8 +101,8 @@ def test_legacy_server(a_server_dict, the_network_height=False):
         app_log.error('detail {} {} {}'.format(exc_type, fname, exc_tb.tb_lineno))
 
     a_server_dict['active'] = active
-    a_server_dict['clients'] = clients
-    a_server_dict['total_slots'] = max_clients
+    a_server_dict['clients'] = int(clients)
+    a_server_dict['total_slots'] = int(max_clients)
     a_server_dict['last_active'] = last_active
 
 
@@ -169,8 +169,8 @@ def test_websocket_server(a_server_dict, the_network_height=False):
     country = "N/A"
     # Fill in extra info
     a_server_dict['active'] = active
-    a_server_dict['clients'] = clients
-    a_server_dict['total_slots'] = max_clients
+    a_server_dict['clients'] = int(clients)
+    a_server_dict['total_slots'] = int(max_clients)
     a_server_dict['last_active'] = last_active
 
 
