@@ -192,7 +192,18 @@ def get_network_height():
     except Exception as e:
         app_log.warning("bismuth.online API not reachable, using back method for testing active")
         WARN = True
-        return False
+
+        # Fallback url added
+        try:
+            fallback_json = http.request('GET', 'https://bismuth.im/api/node/blocklastjson')
+            fallback_chain = json.loads(fallback_json.data.decode('utf-8'))
+            height = int(fallback_chain["block_height"])
+            app_log.info("Bismuth.im fallback API says network height is {}".format(height))
+            return height
+        except Exception as e2:
+            app_log.warning("bismuth.im fallback API also not reachable. Error: {}".format(e2))
+            # If both fail, we return False
+            return False
 
 
 # Main code comes at the end, after
